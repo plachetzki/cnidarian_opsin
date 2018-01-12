@@ -1,0 +1,4 @@
+for fasta in ./align/*_ali
+do
+    seqConverter.pl -d$fasta -if -ope
+done
