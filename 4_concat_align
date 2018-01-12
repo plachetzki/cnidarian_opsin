@@ -1,0 +1,15 @@
+baits=$1
+anchors=$2
+
+perl -pi -e 's/\*//g' ./hits_fasta/*.fas
+
+for fasta in ./hits_fasta/*.fas 
+do
+    cdhit -i $fasta -o ${fasta%.}_cdhit -c 0.98 -n 5 
+    cat $1 $2 ${fasta%.}_cdhit > ${fasta%.}_bts_ancrs                                                                                                                                     
+    mafft ${fasta%.}_bts_ancrs > ${fasta%.}_ali                                                                                                                                           
+done 
+
+mkdir align
+mv ./hits_fasta/*ali ./align 
+rm ./hits_fasta/*ancrs
