@@ -4,5 +4,9 @@ do
         makeblastdb -in $i -parse_seqids -dbtype prot
 done
 
+# move blastdbs to new dir
 mkdir blastdb
 cp ./fastas/* blastdb
+
+# clean up fastas dir
+rm ./fastas/*.fas.*
