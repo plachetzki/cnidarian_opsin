@@ -1,0 +1,9 @@
+for i in ./blastout/*blastout
+do
+  echo "getting hit accessions  $i ..."
+  cut -f2 $i > ${i%.}_hits
+done
+
+mkdir hit1_accessions
+
+mv ./blastout/*hits ./hit1_accessions
