@@ -1,0 +1,8 @@
+for i in ./fastas/*.fas
+do
+        echo "formating for BLAST  $i ..."
+        makeblastdb -in $i -parse_seqids -dbtype prot
+done
+
+mkdir blastdb
+cp ./fastas/* blastdb
