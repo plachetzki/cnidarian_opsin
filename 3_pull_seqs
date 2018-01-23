@@ -1,3 +1,5 @@
+#! /bin/bash
+
 for hitfile in ./hit1_accessions/*_ref_blastout_hits
 do
     perl -p -e 's/\>//g' $hitfile > temp
