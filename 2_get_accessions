@@ -1,3 +1,5 @@
+#! /bin/bash
+
 for i in ./blastout/*blastout
 do
   echo "getting hit accessions  $i ..."
