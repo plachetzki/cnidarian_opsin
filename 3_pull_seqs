@@ -6,7 +6,7 @@ do
     filenamefull=${hitfile##*/}
     filename="${filenamefull%_ref_blastout_hits*}"
     echo "pull FASTA seqs from  $filename ..."
-    selectSeqs.pl -f temp ./new_fastas/$filename >> $filename
+    selectSeqs.pl -f temp ./fastas/$filename >> $filename
     rm temp
 done
 
