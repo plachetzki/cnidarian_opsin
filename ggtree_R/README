@@ -1,0 +1,7 @@
+This dir contains data and R scripts associated with our opsin phylogeny work
+
+working scripts are contained in
+
+ops_R.R 
+
+Note that the path needs to be changed for these to work
