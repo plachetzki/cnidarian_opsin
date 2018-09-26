@@ -1,5 +1,7 @@
 #! /bin/bash/env
 
+# formatting blast databases from fasta dir
+
 for i in ./fastas/*.fas
 do
         echo "formating for BLAST  $i ..."
