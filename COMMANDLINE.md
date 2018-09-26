@@ -7,8 +7,8 @@ Can be done two ways:
 
 1.
 ```sh
-$ awk '/^>/{print ">" ++i; next}{print}' <NAMEOFFASTAFILE> NAMEOFOUTFILE
-$ perl -p -i -e 's/>/>GENUS_/g' NAMEOFOUTFILEFROMABOVE
+awk '/^>/{print ">" ++i; next}{print}' <NAMEOFFASTAFILE> NAMEOFOUTFILE
+perl -p -i -e 's/>/>GENUS_/g' NAMEOFOUTFILEFROMABOVE
 ```
 
 2.
