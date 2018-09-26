@@ -63,9 +63,14 @@ B6. Retrieve sequence info for all the tips that made it through the tree_editor
 ./6_pull_seqs.sh
 ```
 
-B7. Now that blast hits have been filtered in taxa specific manner, all the sequences are concatenated into one fasta were termed "total_opsin.fas". This represents the first total dataset. It is aligned, converted to phylip, and a ML tree is built using the PROTGAMMAGTR model in RAxML. NOTE this will most likely take upwards of 24 hours depending on the amount of data
+B7. Now that blast hits have been filtered in taxa specific manner, all the sequences are concatenated into one fasta were termed "total_opsin.fas". Make sure to include a copy of the fasta files containing the baits and anchors in this directory so they are included into the total_opsin.fas as well. This represents the first total dataset. It is aligned, converted to phylip, and a ML tree is built using the PROTGAMMAGTR model in RAxML. NOTE this will most likely take upwards of 24 hours depending on the amount of data
 
 *Dependencies: MAFFT v7.305b (Katoh et al. 2013), custom seqConverter.pl script, and RAxML v8.2.10 (Stamatakis 2014)*
 ```sh
 ./7_total_ali_and_tree.sh
 ```
+
+
+## C. Concatenated Tree analyses and filtering
+
+C1. 
