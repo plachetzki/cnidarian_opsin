@@ -1,3 +1,10 @@
+
+### Custom function for phylogenetic focusing. Inputs all the ML gene trees, roots them with the MRCA of
+### the anchor sequences specified by root. Next the clade containing the MRCA of the genes of interest (opsin)
+### and their outgroup (melatonin receptors) if identified and pruned off for further analysis. This is done
+### for each taxa
+
+
 library(ape)
 library(phytools)
 #wrap functions to perfom on each tree into one big function
@@ -8,7 +15,7 @@ dostuff<-function(sometree ) {
   #############################
   ######1. root with MRCA of dopamine and histamine 
   #############################
-  # setting the mrca of histamine and dopamine and using as root (this sets root as the node # of mrca)
+  # setting the mrca of anchors and using as root (this sets root as the node # of mrca)
   root <- findMRCA(mytree, tips = c("Homo_orexin_receptor_1", "Homo_neuropeptide_FF_receptor", "Homo_RFamide_receptor", "Homo_neurokinin_receptor", "Homo_somatostatin_receptor", "Homo_mu_opioid_receptor_variant", "Homo_galanin_receptor"), type = "node")
   
   # now root tree  
