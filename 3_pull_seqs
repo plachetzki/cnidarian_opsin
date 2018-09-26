@@ -1,5 +1,8 @@
 #! /bin/bash
 
+
+# retrieve seqeunces that coorespond to accession number for each taxa
+# uses the perl selectSeqs.pl script which, given a list of acessions and the cooresponding fasta, retieves all sequence data for each accession provided
 for hitfile in ./hit1_accessions/*_ref_blastout_hits
 do
     perl -p -e 's/\>//g' $hitfile > temp
@@ -10,6 +13,7 @@ do
     rm temp
 done
 
+# resulting fastas, which contain all blast hit seqs for each taxa, sent to new dir called hits_fasta
 mkdir hits_fasta
 
 mv *.fas ./hits_fasta
