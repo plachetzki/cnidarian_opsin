@@ -115,3 +115,21 @@ mafft FASTA4 > FASTA4.ali
 ./seqConverter.pl -d./FASTA4.ali -if -ope
 raxmlHPC-PTHREADS -T 24 -s FASTA4.phylip -m PROTGAMMAGTR -p 12345 -n opsin_and_outgroup.tre
 ```
+
+C6. The ML tree is viewed in FigTree, rooted with appropriate outgroup, and the clade of interest (the monophyletic opsin clade in our case) is pruned off and used for further analysis.
+
+## D. Final analyses for the clade of interest
+
+D1. With the final clade isolated more stringent methods of alignment and tree buliding can occur. First our final dataset was aligned with the progressive aligner PASTA, names were converted back to the original format using the name_change.py script, and we removed sequences that lacked the characteristic lysine in position 296 of opsin sequences by identifying them in SEAview making another RemoveThese.txt file with the headers of sequences lacking lysine 296
+
+
+*Dependencies: PASTA (Mirarab et al. 2015), custom name_change.py script, custom seqRemover.py script, and SEAveiw v4 (Gouy et al. 2010)*
+```sh
+module load anaconda/colsa
+source activate pasta-1.8.2
+srun pasta -i opsinclade.fas -d protein -j opsinclade --num-cpus=24
+# PASTA strips underscores and removes capitial letter, we put them back with the next step
+./name_change.py -p opsinclade_temp_iteration_2_seq_alignment.txt -o opsinclade_fixed.ali
+# from here we view the alignment in SEAview and note seqs lacking lysine 296 in the RemoveThese.txt file
+./seqRemover.py -i opsinclade_fixed.ali -o opsinclade_musthaveK.fas -r RemoveThese.txt
+```
