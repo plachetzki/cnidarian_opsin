@@ -20,11 +20,23 @@ Shell script using the perl seqConverter.pl script to convert alignment files to
 #### 4_RAxML.sh
 Shell script making ML trees using PROTGAMMAGTR model in RAxML. Must be executed in directory containing phylip files
 
-##### 5_tree_editor.R
+#### 5_tree_editor.R
 R script for first round of phylogenetic focusing. Filtering out distantly related sequences in a taxon specific manner
 
-##### 6_pull_seqs.sh
+#### 6_pull_seqs.sh
 (loop under construction). Shell script for retrieving sequence data for all the genes that were included in the trees export from tree_editor.R script
 
-#### 7_total_ali.sh
+#### 7_total_ali_and_tree.sh
 Shell script to concatenate all fastas together into the "total" dataset and aligns using MAFFT
+
+#### selectSeqs.pl
+Perl script: you provide file with the names of sequences wanted, the original fasta containing all the sequence data, and it outputs a fasta file containing the sequence data only from the names you provided
+
+#### seqConverter.pl
+Perl script for converting alignments into phylip files
+
+#### name_change.py 
+Python script for changing names back to original format after the alignment program PASTA strips capital letters and underscores
+
+#### branch_trimmer.py
+Python script for pruning branches that exceed a user defined branch length in a phylogeny
