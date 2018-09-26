@@ -120,10 +120,9 @@ C6. The ML tree is viewed in FigTree, rooted with appropriate outgroup, and the 
 
 ## D. Final analyses for the clade of interest
 
-D1. With the final clade isolated more stringent methods of alignment and tree buliding can occur. First our final dataset was aligned with the progressive aligner PASTA, names were converted back to the original format using the name_change.py script, and we removed sequences that lacked the characteristic lysine in position 296 of opsin sequences by identifying them in SEAview making another RemoveThese.txt file with the headers of sequences lacking lysine 296
+D1. With the final clade isolated more stringent methods of alignment and tree buliding can occur. First our final dataset was aligned with the progressive aligner PASTA, names were converted back to the original format using the name_change.py script, and we removed sequences that lacked the characteristic lysine in position 296 of opsin sequences by identifying them in SEAview making another RemoveThese.txt file with the headers of sequences lacking lysine 296. This final fasta is aligned using PASTA, names are converted back to normal, and the alignment is converted to phylip format.
 
-
-*Dependencies: PASTA (Mirarab et al. 2015), custom name_change.py script, custom seqRemover.py script, and SEAveiw v4 (Gouy et al. 2010)*
+*Dependencies: PASTA (Mirarab et al. 2015), custom name_change.py script, custom seqRemover.py script, SEAveiw v4 (Gouy et al. 2010), and custom seqConverter.pl script*
 ```sh
 module load anaconda/colsa
 source activate pasta-1.8.2
@@ -132,4 +131,40 @@ srun pasta -i opsinclade.fas -d protein -j opsinclade --num-cpus=24
 ./name_change.py -p opsinclade_temp_iteration_2_seq_alignment.txt -o opsinclade_fixed.ali
 # from here we view the alignment in SEAview and note seqs lacking lysine 296 in the RemoveThese.txt file
 ./seqRemover.py -i opsinclade_fixed.ali -o opsinclade_musthaveK.fas -r RemoveThese.txt
+srun pasta -i opsinclade_musthaveK.fas -d protein -j opsinclade_musthaveK --num-cpus=24
+./name_change.py -p opsinclade_musthaveK_temp_iteration_2_seq_alignment.txt -o opsinclade_musthaveK_fixed.ali
+./seqConverter.pl -d./opsinclade_musthaveK_fixed.ali -if -ope
+```
+
+D2. With the refined final opsin fasta, the final steps are depended on how many different tree building approaches and analyses the researcher wants to conduct. Below are the lines of code for all the phylogenies we generated using varrying models in RAxML, IQTree, and PhyloBayes MPI
+
+*Dependencies: RAxML v8.2.10 (Stamatakis 2014)*
+```sh
+## the following are for the best fitting ML trees
+raxmlHPC-PTHREADS -T 24 -s opsinclade_musthaveK_fixed.phylip -m PROTGAMMAGTR -# 20 -p 12345 -n final_opsinclade_gtr.tre
+raxmlHPC-PTHREADS -T 24 -s opsinclade_musthaveK_fixed.phylip -m PROTGAMMAAUTO -# 20 -p 12345 -n final_opsinclade_auto.tre
+## the following are for bootstraping
+raxmlHPC-PTHREADS -T 24 -s opsinclade_musthaveK_fixed.phylip -m PROTGAMMAGTR -p 12345 -n final_opsinclade_gtr.tre -x 12345 -N 1000
+raxmlHPC-PTHREADS -T 24 -s opsinclade_musthaveK_fixed.phylip -m PROTGAMMAAUTO -p 12345 -n final_opsinclade_auto.tre -x 12345 -N 1000
+## the following are for consensus trees
+raxmlHPC-PTHREADS -T 24 -f b -t RAxML_bestTree.final_opsinclade_gtr -m PROTGAMMAGTR -p 12345 -n consensus_opsinclade_gtr.tre -z RAxML_bootstrap.final_opsinclade_gtr.tre
+raxmlHPC-PTHREADS -T 24 -f b -t RAxML_bestTree.final_opsinclade_auto -m PROTGAMMAAUTP -p 12345 -n consensus_opsinclade_auto.tre -z RAxML_bootstrap.final_opsinclade_auto.tre
+```
+
+*Dependencies: IQtree 1.6.0 (Wang et al. 2018)*
+```sh
+## the following are testing different versions of the GTR model, ending with ModelFinder implemented via IQTree to find the best fixed model
+iqtree -s opsinclade_musthaveK_fixed.phylip -m "GTR20" -alrt 1000 -nt 24
+iqtree -s opsinclade_musthaveK_fixed.phylip -m "GTR20+C20" -alrt 1000 -nt 24
+iqtree -s opsinclade_musthaveK_fixed.phylip -m "GTR20+C60" -alrt 1000 -nt 24
+iqtree -s opsinclade_musthaveK_fixed.phylip -m MFP -alrt 1000
+```
+
+*Dependencies: Phylobayes MPI (Lartillot et al. 2013)*
+```sh
+## the following sets up two bayesian chains in tree space
+mpirun -np 24 pb_mpi -d opsinclade_musthaveK_fixed.phylip opsin_1 
+mpirun -np 24 pb_mpi -d opsinclade_musthaveK_fixed.phylip opsin_2
+## the following checks if/how close the chains are to converging
+bpcomp -x 1000 10 opsin_1 opsin_2
 ```
