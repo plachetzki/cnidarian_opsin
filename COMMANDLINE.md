@@ -103,6 +103,8 @@ C4. Remove sequences with insertions greater than 25 AAs long that do not align 
 *Dependencies: MAFFT v7.305b (Katoh et al. 2013) and SEAveiw v4 (Gouy et al. 2010)*
 ```sh
 mafft FASTA3 > FASTA3.ali
+# FASTA3.ali is screened in SEAview for sequences with erroneous insertions. Names of seqs to be removed written to RemoveThese.txt
+./seqRemover.py -i FASTA3 -o FASTA4 -r RemoveThese.txt
 ```
-FASTA3.ali is screened in SEAview for sequences with erroneous insertions
+
 
