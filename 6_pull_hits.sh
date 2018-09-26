@@ -1,6 +1,11 @@
+
+# strip away unwanted space and prefix to file names
 rename ' ' '' ./tip_files/*.txt
 rename 'RAxML_bestTree.' '' ./tip_files/*.txt
 
+
+## UNDER WORK, loop for selectSeqs.pl will be up soon. ]
+# Retrieves sequence data for all the genes that were included in the trees export from tree_editor.R script
 perl ./selectSeqs.pl -f ./tip_files/Abylopsis_tips.txt ./fastas/Abylopsis.fas > Abylopsis_seqs.fas
 perl ./selectSeqs.pl -f ./tip_files/Acanthoscurria_tips.txt ./fastas/Acanthoscurria.fas > Acanthoscurria_seqs.fas
 perl ./selectSeqs.pl -f ./tip_files/Acropora_tips.txt ./fastas/Acropora.fas > Acropora_seqs.fas 
@@ -97,6 +102,7 @@ perl ./selectSeqs.pl -f ./tip_files/Turritopsis_tips.txt ./fastas/Turritopsis.fa
 perl ./selectSeqs.pl -f ./tip_files/Vallicula_tips.txt ./fastas/Vallicula.fas > Vallicula_seqs.fas
 perl ./selectSeqs.pl -f ./tip_files/Xenoturbella_tips.txt ./fastas/Xenoturbella.fas > Xenoturbella_seqs.fas
 
+# put all fastas in new dir
 mkdir tip_seqs
 
 mv *seqs.fas tip_seqs
