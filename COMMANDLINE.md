@@ -30,13 +30,14 @@ B1. Conduct blast search using a fasta file containing all query or bait sequenc
 ```
 
 B2. Remove redudant sequences in each fasta, concatenate blast queary seqeunces and "anchor" seqeunces with fasta for every taxa, and align using MAFFT
-*Dependencies: CD-HIT v4.6 (Fu et al. 2012) and MAFFT v7.305b (Katoh et al. 2013)*
 
+*Dependencies: CD-HIT v4.6 (Fu et al. 2012) and MAFFT v7.305b (Katoh et al. 2013)*
 ```sh
 ./2_concat_align.sh BLASTQUERYFASTA ANCHORSEQFASTA
 ```
 
 B3. Convert alignments to phylip files
+
 *Dependencies: custom seqConverter.pl script*
 ```sh
 ./3_convert.sh
@@ -44,7 +45,8 @@ B3. Convert alignments to phylip files
 
 B4. Make maximum likelihood trees using the PROTGAMMALG model in RAxML for all phylip files
 
+*Dependencies: RAxML v8.2.10 (Stamatakis 2014)*
 ```sh
 ./4_RAxML.sh
 ```
-*Dependencies: RAxML v8.2.10 (Stamatakis 2014)*
+
