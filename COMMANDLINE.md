@@ -43,10 +43,29 @@ B3. Convert alignments to phylip files
 ./3_convert.sh
 ```
 
-B4. Make maximum likelihood trees using the PROTGAMMALG model in RAxML for all phylip files
+B4. Make maximum likelihood trees using the PROTGAMMALG model in RAxML for all phylip files. This script must be executed in the directory containing all phylip files (align)
 
 *Dependencies: RAxML v8.2.10 (Stamatakis 2014)*
 ```sh
 ./4_RAxML.sh
 ```
 
+B5. First round of Phylogenetic Focusing: Filter blast results in a taxon specific manner. tree_editor.R script is executed from local folder containing all the ML phylogenies from above. This that must be edited in the R script are the "root" and "outgroup" variable were root is the anchor sequences and outgroup is an acceptable outgroup to the gene family of interest. Output is a text file containing the names of the genes (Genus_accession#) that made it through for further analysis. 
+
+```sh
+5_tree_editor.R
+```
+
+B6. Retrieve sequence info for all the tips that made it through the tree_editor.R script. Note that this script is currently not looped and each taxa was indivdually added. This will be updated soon.
+
+*Dependencies: custom selectSeqs.pl script*
+```sh
+./6_pull_seqs.sh
+```
+
+B7. Now that blast hits have been filtered in taxa specific manner, all the sequences are concatenated into one fasta were termed "total_opsin.fas". This represents the first total dataset. It is aligned, converted to phylip, and a ML tree is built using the PROTGAMMAGTR model in RAxML. NOTE this will most likely take upwards of 24 hours depending on the amount of data
+
+*Dependencies: MAFFT v7.305b (Katoh et al. 2013), custom seqConverter.pl script, and RAxML v8.2.10 (Stamatakis 2014)*
+```sh
+./7_total_ali_and_tree.sh
+```
