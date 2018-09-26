@@ -1,7 +1,7 @@
 # Phylogenetic Focusing Revelas the Evolution of Eumetazoan Opsins
 Deep analyses of eumetazoan opsin phylogeny
 
-commandline.md with list of commands coming soon
+See COMMANDLINE.md for list of commands and arguments used for analyses
 
 ## Scripts used for Phylogenetic Focusing
 
