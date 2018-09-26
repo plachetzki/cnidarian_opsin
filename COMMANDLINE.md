@@ -73,4 +73,36 @@ B7. Now that blast hits have been filtered in taxa specific manner, all the sequ
 
 ## C. Concatenated Tree analyses and filtering
 
-C1. 
+C1. Identify the clade containing the genes of interest and the true outgroup (for our analyses that is the opsin + paraopsin clade). Prune this clade off, extract the names of all the tips, and retrieve sequence data for those tips. NOTE: you must also concatenate all the original fastas from the taxa together to make one "total_fasta.fa" file
+
+```sh
+./selectSeq.pl -f PATHTOTIPFILE PATHTOtotal_fasta.fa > NAMEOFOUTFILE
+cat OUTFILE BAITFILE > FASTA1
+```
+
+C2. Begin filtering: First we align the 'fasta1' file using MAFFT, mask out gap sites in the alignment, and then remove any sequence that lacks enough informative data (we set the threshold to any seq with less than 150 AAs worth of data, done using the check_seqsLen.py script). Fasta file is output containing the seqeunces that pass the user defined length threshold.
+
+*Dependencies: MAFFT v7.305b (Katoh et al. 2013) and trimAl v1.4 (Capella-Gutiérrez et al. 2009)*
+```sh
+mafft FASTA1 > FASTA1.ali
+trimal -in FASTA1.ali -out FASTA1_TRIMMED.ali -gt 0.2
+./check_seqsLen.py -i FASTA1TRIMMED.ali -t 150 -o FASTA2
+```
+
+C3. Align FASTA2, mask out gap sites, and remove spurious sequences using user defined thresholds in trimAl.
+
+*Dependencies: MAFFT v7.305b (Katoh et al. 2013) and trimAl v1.4 (Capella-Gutiérrez et al. 2009)*
+```sh
+mafft FASTA2 > FASTA2.ali
+trimal -in FASTA2.ali -out FASTA2_TRIMMED.ali -gt 0.2
+trimal -in FASTA2.ali -out FASTA2_TRIMMED.ali -resoverlap 0.55 -seqoverlap 55
+```
+
+C4. Remove sequences with insertions greater than 25 AAs long that do not align to any data. These are most likely errors from assembly containing read throughs from pseudogenes or introns. These insertions must be identifed by finding them in SEAview and removed from the fasta file.
+
+*Dependencies: MAFFT v7.305b (Katoh et al. 2013) and SEAveiw v4 (Gouy et al. 2010)*
+```sh
+mafft FASTA3 > FASTA3.ali
+```
+FASTA3.ali is screened in SEAview for sequences with erroneous insertions
+
