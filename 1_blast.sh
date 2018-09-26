@@ -1,5 +1,6 @@
 #! /bin/bash
 
+# first positional arg is fasta conataining blast queary seqs
 fasta_query=$1
 
 # iterate over the blastdb's and preform blast search with queary seqeunce file provided in first poisitional argument
