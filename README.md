@@ -40,3 +40,6 @@ Python script for changing names back to original format after the alignment pro
 
 #### branch_trimmer.py
 Python script for pruning branches that exceed a user defined branch length in a phylogeny
+
+#### seqRemover.py
+Python script: given a fasta file and the text file containing the headers of unwanted seqs, this script outputs a new file lacking the unwamted seqs specified in the text file
