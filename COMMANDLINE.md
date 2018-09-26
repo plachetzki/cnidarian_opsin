@@ -1,9 +1,10 @@
 # Commands and Parameters used in analyses
 ------
 
-##A. Data prep
+## A. Data prep
 Format all seq headers into "Genus_#" with the # coorespoding to the seqeunce in the fasta file
 Can be done two ways:
+
 1.
 ```sh
 $ awk '/^>/{print ">" ++i; next}{print}' <NAMEOFFASTAFILE> NAMEOFOUTFILE
