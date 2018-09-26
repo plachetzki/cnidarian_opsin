@@ -107,4 +107,11 @@ mafft FASTA3 > FASTA3.ali
 ./seqRemover.py -i FASTA3 -o FASTA4 -r RemoveThese.txt
 ```
 
+C5. With filtering complete, FASTA4 is aligned, converted to phylip format, and a ML tree is made
 
+*Dependencies: MAFFT v7.305b (Katoh et al. 2013), custom seqConverter.pl script, and RAxML v8.2.10 (Stamatakis 2014)*
+```sh
+mafft FASTA4 > FASTA4.ali
+./seqConverter.pl -d./FASTA4.ali -if -ope
+raxmlHPC-PTHREADS -T 24 -s FASTA4.phylip -m PROTGAMMAGTR -p 12345 -n opsin_and_outgroup.tre
+```
